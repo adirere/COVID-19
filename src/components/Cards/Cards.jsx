@@ -17,7 +17,8 @@ const useStyles = makeStyles({
     borderRadius: "0px 0px 50px 50px",
     "@media (max-width: 600px)": {
       borderRadius: "0px",
-      width: "90%"
+      width: "90%",
+      marginTop: "1rem"
     }
   },
   firstCardBotom: {
@@ -40,6 +41,22 @@ const useStyles = makeStyles({
   },
   typographyStyled: {
     margin: "1rem 0"
+  },
+  dividerOne: {
+    top: "1.5rem",
+    left: "37.5%",
+    height: "3rem",
+    "@media (max-width: 600px)": {
+      height: "0"
+    }
+  },
+  dividerTwo: {
+    top: "1.5rem",
+    left: "62.5%",
+    height: "3rem",
+    "@media (max-width: 600px)": {
+      height: "0"
+    }
   }
 });
 
@@ -61,6 +78,18 @@ const Cards = () => {
           justify="space-evenly"
           alignItems="center"
         >
+          <Divider
+            absolute
+            className={classes.dividerOne}
+            flexItem
+            orientation="vertical"
+          />
+          <Divider
+            absolute
+            className={classes.dividerTwo}
+            flexItem
+            orientation="vertical"
+          />
           {types.map((type, index) => (
             <Grid xs={12} sm={4} item>
               <Card
