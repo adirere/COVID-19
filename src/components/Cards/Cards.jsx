@@ -8,6 +8,7 @@ import {
   makeStyles,
   Slide
 } from "@material-ui/core";
+import CountUp from "react-countup";
 
 const useStyles = makeStyles({
   cardStyled: {
@@ -16,7 +17,7 @@ const useStyles = makeStyles({
     borderRadius: "0px 0px 50px 50px",
     "@media (max-width: 600px)": {
       borderRadius: "0px",
-      width: "100%"
+      width: "90%"
     }
   },
   firstCardBotom: {
@@ -78,7 +79,7 @@ const Cards = () => {
                     {type[0]}
                   </Typography>
                   <Typography className={classes.typographyStyled} variant="h5">
-                    {type[1]}
+                    <CountUp end={type[1]} duration={2} separator="," />
                   </Typography>
                 </CardContent>
               </Card>
