@@ -6,7 +6,7 @@ import {
   Typography,
   Divider,
   makeStyles,
-  useMediaQuery
+  Slide
 } from "@material-ui/core";
 
 const useStyles = makeStyles({
@@ -52,39 +52,41 @@ const Cards = () => {
   const classes = useStyles();
 
   return (
-    <Card className={classes.cardStyled}>
-      <Grid
-        container
-        direction="row"
-        justify="space-evenly"
-        alignItems="center"
-      >
-        {types.map((type, index) => (
-          <Grid xs={12} sm={4} item>
-            <Card
-              className={
-                index === 0
-                  ? classes.firstCardBotom
-                  : index === 1
-                  ? classes.secondCardBotom
-                  : classes.thirdCardBotom
-              }
-              style={{ borderBottom: `10px solid ${type[2]}` }}
-              elevation={0}
-            >
-              <CardContent className={classes.cardContentStyled}>
-                <Typography className={classes.typographyStyled} variant="h7">
-                  {type[0]}
-                </Typography>
-                <Typography className={classes.typographyStyled} variant="h5">
-                  {type[1]}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
-    </Card>
+    <Slide in={true}>
+      <Card className={classes.cardStyled}>
+        <Grid
+          container
+          direction="row"
+          justify="space-evenly"
+          alignItems="center"
+        >
+          {types.map((type, index) => (
+            <Grid xs={12} sm={4} item>
+              <Card
+                className={
+                  index === 0
+                    ? classes.firstCardBotom
+                    : index === 1
+                    ? classes.secondCardBotom
+                    : classes.thirdCardBotom
+                }
+                style={{ borderBottom: `10px solid ${type[2]}` }}
+                elevation={0}
+              >
+                <CardContent className={classes.cardContentStyled}>
+                  <Typography className={classes.typographyStyled} variant="h7">
+                    {type[0]}
+                  </Typography>
+                  <Typography className={classes.typographyStyled} variant="h5">
+                    {type[1]}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Card>
+    </Slide>
   );
 };
 
