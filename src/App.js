@@ -13,7 +13,7 @@ const useStyles = makeStyles({
     height: "15%",
     top: "2%",
     left: "1%",
-    animation: "example 5s linear 2s infinite alternate",
+    animation: "hovering 5s linear 2s infinite alternate, entrance ease 1s",
     "@media (max-width:600px)": {
       position: "relative",
       margin: "1rem 0",

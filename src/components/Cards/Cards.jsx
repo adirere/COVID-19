@@ -63,7 +63,7 @@ const useStyles = makeStyles({
 const types = [
   ["INFECTED", 10173722, "#FFD177"],
   ["RECOVERED", 5160489, "#60D66C"],
-  ["DEATHS", 502517, "#FF7777"]
+  ["DEATHS", 502517, "#f89283"]
 ];
 
 const Cards = () => {
