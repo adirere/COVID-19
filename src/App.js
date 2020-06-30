@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Cards from "./components/Cards/Cards";
 import { makeStyles } from "@material-ui/core";
 import { ReactComponent as Logo } from "./images/coronavirus.svg";
+import { fetchCardsData } from "./api";
 
 const useStyles = makeStyles({
   container: {
@@ -30,11 +31,20 @@ const useStyles = makeStyles({
 
 export default function App() {
   const classes = useStyles();
+  const [data, setData] = useState({});
+
+  useEffect(() => {
+    async function fetchResult() {
+      const data = await fetchCardsData();
+      setData(data);
+    }
+    fetchResult();
+  }, []);
 
   return (
     <div className={classes.container}>
       <Logo className={classes.logo} />
-      <Cards />
+      <Cards data={data} />
     </div>
   );
 }

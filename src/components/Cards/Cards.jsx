@@ -6,7 +6,8 @@ import {
   Typography,
   Divider,
   makeStyles,
-  Slide
+  Slide,
+  Skeleton
 } from "@material-ui/core";
 import CountUp from "react-countup";
 
@@ -60,14 +61,23 @@ const useStyles = makeStyles({
   }
 });
 
-const types = [
-  ["INFECTED", 10173722, "#FFD177"],
-  ["RECOVERED", 5160489, "#60D66C"],
-  ["DEATHS", 502517, "#f89283"]
-];
-
-const Cards = () => {
+const Cards = ({ data: { confirmed, recovered, deaths } }) => {
   const classes = useStyles();
+  let types = [];
+
+  if (confirmed) {
+    types = [
+      ["INFECTED", confirmed.value, "#FFD177"],
+      ["RECOVERED", recovered.value, "#60D66C"],
+      ["DEATHS", deaths.value, "#f89283"]
+    ];
+  } else {
+    types = [
+      ["INFECTED", 1, "#FFD177"],
+      ["RECOVERED", 2, "#60D66C"],
+      ["DEATHS", 3, "#f89283"]
+    ];
+  }
 
   return (
     <Slide in={true}>
