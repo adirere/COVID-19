@@ -6,9 +6,9 @@ import {
   Typography,
   Divider,
   makeStyles,
-  Slide,
-  Skeleton
+  Slide
 } from "@material-ui/core";
+import Skeleton from "@material-ui/lab/Skeleton";
 import CountUp from "react-countup";
 
 const useStyles = makeStyles({
@@ -58,6 +58,11 @@ const useStyles = makeStyles({
     "@media (max-width: 600px)": {
       height: "0"
     }
+  },
+  skeleton: {
+    margin: "auto",
+    height: "1.5rem",
+    backgroundColor: "#FFAA98"
   }
 });
 
@@ -70,12 +75,6 @@ const Cards = ({ data: { confirmed, recovered, deaths } }) => {
       ["INFECTED", confirmed.value, "#FFD177"],
       ["RECOVERED", recovered.value, "#60D66C"],
       ["DEATHS", deaths.value, "#f89283"]
-    ];
-  } else {
-    types = [
-      ["INFECTED", 1, "#FFD177"],
-      ["RECOVERED", 2, "#60D66C"],
-      ["DEATHS", 3, "#f89283"]
     ];
   }
 
@@ -101,7 +100,7 @@ const Cards = ({ data: { confirmed, recovered, deaths } }) => {
             orientation="vertical"
           />
           {types.map((type, index) => (
-            <Grid xs={12} sm={4} item>
+            <Grid key={type[0]} xs={12} sm={4} item>
               <Card
                 className={
                   index === 0
@@ -114,11 +113,22 @@ const Cards = ({ data: { confirmed, recovered, deaths } }) => {
                 elevation={0}
               >
                 <CardContent className={classes.cardContentStyled}>
-                  <Typography className={classes.typographyStyled} variant="h7">
+                  <Typography
+                    className={classes.typographyStyled}
+                    variant="subtitle1"
+                  >
                     {type[0]}
                   </Typography>
                   <Typography className={classes.typographyStyled} variant="h5">
-                    <CountUp end={type[1]} duration={2} separator="," />
+                    {types ? (
+                      <CountUp end={type[1]} duration={2} separator="," />
+                    ) : (
+                      <Skeleton
+                        variant="rect"
+                        width={210}
+                        className={classes.skeleton}
+                      />
+                    )}
                   </Typography>
                 </CardContent>
               </Card>
