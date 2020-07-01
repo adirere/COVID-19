@@ -47,6 +47,7 @@ const useStyles = makeStyles({
     top: "1.5rem",
     left: "37.5%",
     height: "3rem",
+    animation: "entranceDivider ease 4s",
     "@media (max-width: 600px)": {
       height: "0"
     }
@@ -55,6 +56,7 @@ const useStyles = makeStyles({
     top: "1.5rem",
     left: "62.5%",
     height: "3rem",
+    animation: "entranceDivider ease 4s",
     "@media (max-width: 600px)": {
       height: "0"
     }

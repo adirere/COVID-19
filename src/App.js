@@ -3,6 +3,7 @@ import Cards from "./components/Cards/Cards";
 import { makeStyles } from "@material-ui/core";
 import { ReactComponent as Logo } from "./images/coronavirus.svg";
 import { fetchCardsData } from "./api";
+import BarChart from "./components/Chart/BarChart";
 
 const useStyles = makeStyles({
   container: {
@@ -45,6 +46,7 @@ export default function App() {
     <div className={classes.container}>
       <Logo className={classes.logo} />
       <Cards data={data} />
+      <BarChart />
     </div>
   );
 }
