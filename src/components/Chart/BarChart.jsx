@@ -20,6 +20,14 @@ class BarChart extends Component {
     const canvasWidth = w / 2;
     const scale = canvasHeight / (Math.max(...data) + Math.min(...data));
 
+    const tooltip = d3
+      .select(this.refs.canvas)
+      .append("div")
+      .style("position", "absolute")
+      .style("z-index", "10")
+      .style("visibility", "hidden")
+      .text("mock tooltip");
+
     const svgCanvas = d3
       .select(this.refs.canvas)
       .append("svg")
@@ -41,7 +49,7 @@ class BarChart extends Component {
         (datapoint, iteration) =>
           canvasWidth / 40 + iteration * (canvasWidth / 3)
       )
-      .attr("y", datapoint => canvasHeight - datapoint * scale)
+      .attr("y", datapoint => canvasHeight - datapoint)
       .attr("fill", (datapoint, i) => {
         switch (i) {
           case 0:
@@ -51,6 +59,17 @@ class BarChart extends Component {
           default:
             return "#f89283";
         }
+      })
+      .on("mouseover", function() {
+        return tooltip.style("visibility", "visible");
+      })
+      .on("mousemove", () => {
+        return tooltip
+          .style("top", event.pageY - 10 + "px")
+          .style("left", event.pageX + 10 + "px");
+      })
+      .on("mouseout", function() {
+        return tooltip.style("visibility", "hidden");
       });
 
     svgCanvas
@@ -61,6 +80,12 @@ class BarChart extends Component {
       .attr("x", (datapoint, i) => canvasWidth / 40 + i * (canvasWidth / 3))
       .attr("y", (datapoint, i) => canvasHeight - datapoint * scale - 10)
       .text(datapoint => datapoint);
+
+    svgCanvas
+      .selectAll("rect")
+      .transition()
+      .delay(200)
+      .attr("y", datapoint => canvasHeight - datapoint * scale);
   }
 
   render() {
