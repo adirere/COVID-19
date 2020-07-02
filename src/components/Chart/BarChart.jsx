@@ -1,13 +1,12 @@
-import React, { Component } from "react";
+import React, { useRef, useEffect } from "react";
 import * as d3 from "d3";
 
-class BarChart extends Component {
-  componentDidMount() {
-    const data = [2, 4, 3];
-    this.drawBarChart(data);
-  }
+const BarChart = () => {
+  const canvas = useRef(null);
 
-  drawBarChart(data) {
+  useEffect(() => {
+    const data = [10538577, 5395571, 512689];
+
     const w =
       window.innerWidth ||
       document.documentElement.clientWidth ||
@@ -21,7 +20,7 @@ class BarChart extends Component {
     const scale = canvasHeight / (Math.max(...data) + Math.min(...data));
 
     const tooltip = d3
-      .select(this.refs.canvas)
+      .select(canvas.current)
       .append("div")
       .style("position", "absolute")
       .style("z-index", "10")
@@ -29,7 +28,7 @@ class BarChart extends Component {
       .text("mock tooltip");
 
     const svgCanvas = d3
-      .select(this.refs.canvas)
+      .select(canvas.current)
       .append("svg")
       .attr("width", canvasWidth)
       .attr("height", canvasHeight)
@@ -84,13 +83,11 @@ class BarChart extends Component {
     svgCanvas
       .selectAll("rect")
       .transition()
-      .delay(200)
+      .delay(400)
       .attr("y", datapoint => canvasHeight - datapoint * scale);
-  }
+  }, []);
 
-  render() {
-    return <div ref="canvas" style={{ marginTop: "5%" }} />;
-  }
-}
+  return <div ref={canvas} style={{ marginTop: "5%" }} />;
+};
 
 export default BarChart;
