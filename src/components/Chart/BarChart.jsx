@@ -23,7 +23,7 @@ const useResizeObserver = ref => {
 };
 
 const BarChart = ({ data: { confirmed, recovered, deaths } }) => {
-  const [myData, setMyData] = useState([10, 34, 64, 14, 28, 60, 50]);
+  const [myData, setMyData] = useState([10965759, 5801930, 523250]);
   const svgRef = useRef();
   const wrapperRef = useRef();
 
@@ -44,22 +44,25 @@ const BarChart = ({ data: { confirmed, recovered, deaths } }) => {
 
     const yScale = d3
       .scaleLinear()
-      .domain([0, 150])
+      .domain([0, d3.max(myData)])
       .range([dimensions.height, 0]);
 
-    const xAxis = d3.axisBottom(xScale).ticks(types.length);
+    const xTicksScale = d3
+      .scaleBand()
+      .domain(types.map((value, index) => value))
+      .range([0, dimensions.width])
+      .padding(0.5);
+
+    const xAxis = d3.axisBottom(xTicksScale).ticks(types.length);
 
     svg
       .select(".x-axis")
       .style("transform", `translateY(${dimensions.height}px)`)
       .call(xAxis);
 
-    const yAxis = d3.axisRight(yScale);
+    const yAxis = d3.axisLeft(yScale);
 
-    svg
-      .select(".y-axis")
-      .style("transform", `translateY(${dimensions.width}px)`)
-      .call(yAxis);
+    svg.select(".y-axis").call(yAxis);
 
     svg
       .selectAll(".bar")
@@ -76,7 +79,7 @@ const BarChart = ({ data: { confirmed, recovered, deaths } }) => {
           .data([value])
           .join(enter => enter.append("text").attr("y", yScale(value) - 4))
           .attr("class", "tooltip")
-          .text(value)
+          .text(value => value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","))
           .attr("x", xScale(index) + xScale.bandwidth() / 2)
           .attr("text-anchor", "middle")
           .transition()
@@ -99,77 +102,16 @@ const BarChart = ({ data: { confirmed, recovered, deaths } }) => {
   }, [myData, dimensions]);
 
   return (
-    <div ref={wrapperRef} style={{margin:"0 20%"}}>
-      <svg ref={svgRef} style={{ overflow: "visible",  width: "75%"}}>
+    <div ref={wrapperRef} style={{ margin: "5% 25%" }}>
+      <svg
+        ref={svgRef}
+        style={{ overflow: "visible", width: "100%", height: "50vh" }}
+      >
         <g className="x-axis" />
         <g className="y-axis" />
       </svg>
     </div>
   );
-
-  // const canvas = useRef(null);
-
-  // useEffect(() => {
-  //   if (confirmed) {
-  //     const data = [confirmed.value, recovered.value, deaths.value];
-
-  //     const w =
-  //       window.innerWidth ||
-  //       document.documentElement.clientWidth ||
-  //       document.body.clientWidth;
-  //     const h =
-  //       window.innerHeight ||
-  //       document.documentElement.clientHeight ||
-  //       document.body.clientHeight;
-  //     const canvasHeight = h / 2;
-  //     const canvasWidth = w / 2;
-  //     const scale = canvasHeight / (Math.max(...data) + Math.min(...data));
-
-  //     const svgCanvas = d3
-  //       .select(canvas.current)
-  //       .append("svg")
-  //       .attr("width", canvasWidth)
-  //       .attr("height", canvasHeight)
-  //       .style("border", "2px solid #aaa")
-  //       .style("background-color", "#fff")
-  //       .style("border-radius", "10px");
-
-  //     svgCanvas
-  //       .selectAll("rect")
-  //       .data(data)
-  //       .enter()
-  //       .append("rect")
-  //       .attr("width", canvasWidth / 4)
-  //       .attr("height", datapoint => datapoint * scale)
-  //       .attr(
-  //         "x",
-  //         (datapoint, iteration) =>
-  //           canvasWidth / 40 + iteration * (canvasWidth / 3)
-  //       )
-  //       .attr("y", datapoint => canvasHeight - datapoint)
-  //       .attr("fill", (datapoint, i) => {
-  //         switch (i) {
-  //           case 0:
-  //             return "#FFD177";
-  //           case 1:
-  //             return "#60D66C";
-  //           default:
-  //             return "#f89283";
-  //         }
-  //       })
-  //       .append("title")
-  //       .text(datapoint => datapoint);
-
-  //     svgCanvas
-  //       .selectAll("rect")
-  //       .transition()
-  //       .attr("y", datapoint => canvasHeight - datapoint * scale);
-
-  //     svgCanvas.exit().remove();
-  //   }
-  // }, [confirmed, recovered, deaths]);
-
-  // return <div ref={canvas} style={{ marginTop: "5%" }} />;
 };
 
 export default BarChart;
