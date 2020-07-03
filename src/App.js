@@ -46,7 +46,7 @@ export default function App() {
     <div className={classes.container}>
       <Logo className={classes.logo} />
       <Cards data={data} />
-      <BarChart />
+      <BarChart data={data} />
     </div>
   );
 }
