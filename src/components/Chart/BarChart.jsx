@@ -23,7 +23,13 @@ const useResizeObserver = ref => {
 };
 
 const BarChart = ({ data: { confirmed, recovered, deaths } }) => {
-  const [myData, setMyData] = useState([10965759, 5801930, 523250]);
+  const [myData, setMyData] = useState([]);
+
+  useEffect(() => {
+    if (!confirmed) return;
+    setMyData([confirmed.value, recovered.value, deaths.value]);
+  }, [confirmed]);
+
   const svgRef = useRef();
   const wrapperRef = useRef();
 
@@ -102,7 +108,7 @@ const BarChart = ({ data: { confirmed, recovered, deaths } }) => {
   }, [myData, dimensions]);
 
   return (
-    <div ref={wrapperRef} style={{ margin: "5% 25%" }}>
+    <div ref={wrapperRef} style={{ margin: "5% 20%" }}>
       <svg
         ref={svgRef}
         style={{ overflow: "visible", width: "100%", height: "50vh" }}

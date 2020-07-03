@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core";
 import { ReactComponent as Logo } from "./images/coronavirus.svg";
 import { fetchCardsData } from "./api";
 import BarChart from "./components/Chart/BarChart";
+import CountryPicker from "./components/CountryPicker/CountryPicker";
 
 const useStyles = makeStyles({
   container: {
@@ -46,6 +47,7 @@ export default function App() {
     <div className={classes.container}>
       <Logo className={classes.logo} />
       <Cards data={data} />
+      <CountryPicker />
       <BarChart data={data} />
     </div>
   );
