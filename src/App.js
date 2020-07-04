@@ -34,20 +34,25 @@ const useStyles = makeStyles({
 export default function App() {
   const classes = useStyles();
   const [data, setData] = useState({});
+  const [country, setCountry] = useState([]);
 
   useEffect(() => {
     async function fetchResult() {
-      const data = await fetchCardsData();
+      const data = await fetchCardsData(country);
       setData(data);
     }
     fetchResult();
-  }, []);
+  }, [country]);
+
+  const handleCountryChange = countryPicked => {
+    setCountry(countryPicked);
+  };
 
   return (
     <div className={classes.container}>
       <Logo className={classes.logo} />
       <Cards data={data} />
-      <CountryPicker />
+      <CountryPicker handleCountryChange={handleCountryChange} />
       <BarChart data={data} />
     </div>
   );
