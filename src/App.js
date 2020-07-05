@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Cards from "./components/Cards/Cards";
 import { makeStyles } from "@material-ui/core";
-import { ReactComponent as Logo } from "./images/coronavirus.svg";
+import { ReactComponent as Coronavirus } from "./images/coronavirus.svg";
+import { ReactComponent as Earth } from "./images/earth.svg";
 import { fetchCardsData } from "./api";
 import BarChart from "./components/Chart/BarChart";
 import CountryPicker from "./components/CountryPicker/CountryPicker";
@@ -10,13 +11,34 @@ const useStyles = makeStyles({
   container: {
     textAlign: "center"
   },
-  logo: {
+  coronavirus: {
     position: "absolute",
     width: "10%",
     height: "15%",
     top: "2%",
     left: "1%",
-    animation: "hovering 5s linear 2s infinite alternate, entrance ease 1s",
+    animation:
+      "hovering 5s linear 2s infinite alternate, entranceCoronavirus ease 1s",
+    "@media (max-width:600px)": {
+      position: "relative",
+      margin: "1rem 1rem",
+      width: "15%"
+    },
+    "@media (max-width:300px)": {
+      position: "relative",
+      margin: "1rem 1rem",
+      width: "20%",
+      height: "5%"
+    }
+  },
+  earth: {
+    position: "absolute",
+    width: "10%",
+    height: "15%",
+    top: "2%",
+    right: "1%",
+    animation:
+      "hovering 5s linear 2s infinite alternate, entranceEarth ease 1s",
     "@media (max-width:600px)": {
       position: "relative",
       margin: "1rem 0",
@@ -50,7 +72,8 @@ export default function App() {
 
   return (
     <div className={classes.container}>
-      <Logo className={classes.logo} />
+      <Coronavirus className={classes.coronavirus} />
+      <Earth className={classes.earth} />
       <Cards data={data} />
       <CountryPicker handleCountryChange={handleCountryChange} />
       <BarChart data={data} />
