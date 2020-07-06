@@ -5,6 +5,7 @@ import { ReactComponent as Coronavirus } from "./images/coronavirus.svg";
 import { ReactComponent as Earth } from "./images/earth.svg";
 import { fetchCardsData } from "./api";
 import BarChart from "./components/Chart/BarChart";
+import LineChart from "./components/Chart/LineChart";
 import CountryPicker from "./components/CountryPicker/CountryPicker";
 
 const useStyles = makeStyles({
@@ -76,7 +77,7 @@ export default function App() {
       <Earth className={classes.earth} />
       <Cards data={data} />
       <CountryPicker handleCountryChange={handleCountryChange} />
-      <BarChart data={data} />
+      {country.length !== 0 ? <BarChart data={data} /> : <LineChart />}
     </div>
   );
 }

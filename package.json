@@ -15,7 +15,8 @@
     "react": "16.12.0",
     "react-countup": "4.3.3",
     "react-dom": "16.12.0",
-    "react-scripts": "3.0.1"
+    "react-scripts": "3.0.1",
+    "resize-observer-polyfill": "1.5.1"
   },
   "devDependencies": {
     "typescript": "3.8.3"

@@ -12,7 +12,7 @@ const useStyles = makeStyles({
     marginTop: "1rem"
   },
   customSelect: {
-    backgroundColor: "rgba(182,170,254,0.4)",
+    backgroundColor: "rgba(182,170,254,0.2)",
     fontFamily: "Arial"
   }
 });

@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import * as d3 from "d3";
+import ResizeObserver from "resize-observer-polyfill";
 
 const useResizeObserver = ref => {
   const [dimensions, setDimensions] = useState(null);
