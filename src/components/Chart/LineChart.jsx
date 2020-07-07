@@ -47,16 +47,13 @@ const LineChart = () => {
       return d3.timeParse("%Y-%m-%d")(d);
     };
 
-    console.log(d3.extent(dailyData.map(daily => parsedDate(daily.date))));
-    console.log(d3.max(dailyData.map(daily => daily.confirmed)));
-
     const xScale = d3
       .scaleTime()
       .domain(d3.extent(dailyData.map(daily => parsedDate(daily.date))))
       .range([0, dimensions.width]);
 
     svg
-      .append("g")
+      .select("g")
       .attr("transform", "translate(0," + dimensions.height + ")")
       .call(d3.axisBottom(xScale));
 
@@ -70,9 +67,12 @@ const LineChart = () => {
 
     svg.select(".y-axis").call(yAxis);
 
+    svg.selectAll(".line").remove();
+
     svg
       .append("path")
       .datum(dailyData)
+      .attr("class", "line")
       .attr("fill", "none")
       .attr("stroke", "#FFD177")
       .attr("stroke-width", 1.5)
@@ -87,6 +87,7 @@ const LineChart = () => {
     svg
       .append("path")
       .datum(dailyData)
+      .attr("class", "line")
       .attr("fill", "none")
       .attr("stroke", "#F89283")
       .attr("stroke-width", 1.5)
