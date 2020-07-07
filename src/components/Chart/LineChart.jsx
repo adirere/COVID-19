@@ -43,39 +43,60 @@ const LineChart = () => {
 
     if (!dimensions) return;
 
+    const parsedDate = function(d) {
+      return d3.timeParse("%Y-%m-%d")(d);
+    };
+
+    console.log(d3.extent(dailyData.map(daily => parsedDate(daily.date))));
+    console.log(d3.max(dailyData.map(daily => daily.confirmed)));
+
     const xScale = d3
-      .scaleLinear()
-      .domain(dailyData.map((value, index) => index))
+      .scaleTime()
+      .domain(d3.extent(dailyData.map(daily => parsedDate(daily.date))))
       .range([0, dimensions.width]);
+
+    svg
+      .append("g")
+      .attr("transform", "translate(0," + dimensions.height + ")")
+      .call(d3.axisBottom(xScale));
 
     const yScale = d3
       .scaleLinear()
       .domain([0, d3.max(dailyData.map(daily => daily.confirmed))])
-      .range([dimensions.height, 0]);
-
-    const xTicksScale = d3
-      .scaleLinear()
-      .domain(dailyData.map((daily, index) => daily.reportDate));
-
-    const xAxis = d3.axisBottom(xTicksScale).ticks(dailyData.length);
-
-    svg
-      .select(".x-axis")
-      .style("transform", `translateY(${dimensions.height}px)`)
-      .call(xAxis);
+      .range([dimensions.height, 0])
+      .nice();
 
     const yAxis = d3.axisLeft(yScale);
 
     svg.select(".y-axis").call(yAxis);
 
     svg
-      .selectAll(".circle")
-      .data(dailyData)
-      .join("line")
-      .attr("class", "circle")
-      .style("transform", "scale(1,-1)")
-      .attr("x", (daily, index) => xScale(index))
-      .attr("y", -dimensions.height);
+      .append("path")
+      .datum(dailyData)
+      .attr("fill", "none")
+      .attr("stroke", "#FFD177")
+      .attr("stroke-width", 1.5)
+      .attr(
+        "d",
+        d3
+          .line()
+          .x(d => xScale(parsedDate(d.date)))
+          .y(d => yScale(d.confirmed))
+      );
+
+    svg
+      .append("path")
+      .datum(dailyData)
+      .attr("fill", "none")
+      .attr("stroke", "#F89283")
+      .attr("stroke-width", 1.5)
+      .attr(
+        "d",
+        d3
+          .line()
+          .x(d => xScale(parsedDate(d.date)))
+          .y(d => yScale(d.deaths))
+      );
   }, [dailyData, dimensions]);
 
   return (
