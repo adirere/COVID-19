@@ -52,11 +52,6 @@ const LineChart = () => {
       .domain(d3.extent(dailyData.map(daily => parsedDate(daily.date))))
       .range([0, dimensions.width]);
 
-    svg
-      .select("g")
-      .attr("transform", "translate(0," + dimensions.height + ")")
-      .call(d3.axisBottom(xScale));
-
     const yScale = d3
       .scaleLinear()
       .domain([0, d3.max(dailyData.map(daily => daily.confirmed))])
@@ -98,6 +93,11 @@ const LineChart = () => {
           .x(d => xScale(parsedDate(d.date)))
           .y(d => yScale(d.deaths))
       );
+
+    svg
+      .select("g")
+      .attr("transform", "translate(0," + dimensions.height + ")")
+      .call(d3.axisBottom(xScale));
   }, [dailyData, dimensions]);
 
   return (
