@@ -1,5 +1,7 @@
 # COVID-19 dashboard
 
+![App Print Screen](./images/Covid19.png)
+
 An dashboard that shows stats in real time of the COVID-19 pandemic.
 
 You can live-view the dashboard here: https://0rtf1.csb.app/
