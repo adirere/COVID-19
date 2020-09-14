@@ -1,6 +1,6 @@
 # COVID-19 dashboard
 
-![App Print Screen](./src/images/Covid19.png)
+![App Print Screen](https://uploads.codesandbox.io/uploads/user/3da8032e-cd8c-4966-8d2b-a74f580418b9/38Ba-Covid19.png)
 
 An dashboard that shows stats in real time of the COVID-19 pandemic.
 
